@@ -1,0 +1,5 @@
+{
+    "name": "Knative verify codegen workflow",
+    "description": "Verifies that code generation produces no differences.",
+    "iconName": "blender"
+}
