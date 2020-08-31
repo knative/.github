@@ -10,6 +10,5 @@ templates about this. The syncing is done by
 ```yaml
 # This file is automagically synced here from github.com/knative-sandbox/.github
 # repo by knobots: https://github.com/mattmoor/knobots and will be overwritten.
-
 ```
 
