@@ -47,10 +47,12 @@ jobs:
           echo '::endgroup::'
 
           echo '::group:: Running DO NOT SUBMIT with reviewdog 🐶 ...'
-          find . -type f \
-                 -o -path './vendor' -prune \
+          # Don't fail because of grep
+          set +o pipefail
+          find . -path './vendor' -prune \
                  -o -path './third_party' -prune \
-                 -o -path './.github/workflows' -prune |
+                 -o -path './.github/workflows' -prune \
+                 -o -type f |
           xargs grep -n "DO NOT SUBMIT" |
           reviewdog -efm="%f:%l:%m" \
                 -name="DO NOT SUBMIT" \
