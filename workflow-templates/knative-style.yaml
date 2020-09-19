@@ -135,9 +135,7 @@ jobs:
           echo '::group:: Running github.com/client9/misspell with reviewdog 🐶 ...'
           # Don't fail because of misspell
           set +o pipefail
-          find . -path './vendor' -prune \
-                 -o -path './third_party' -prune \
-                 -o -type f |
+          find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*' |
           xargs misspell -error |
           reviewdog -efm="%f:%l:%c: %m" \
                 -name="github.com/client9/misspell" \
@@ -160,9 +158,7 @@ jobs:
           echo '::group:: Flagging trailing whitespace with reviewdog 🐶 ...'
           # Don't fail because of grep
           set +o pipefail
-          find . -path './vendor' -prune \
-                 -o -path './third_party' -prune \
-                 -o -type f |
+          find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*' |
           xargs grep -nE " +$" |
           reviewdog -efm="%f:%l:%m" \
                 -name="trailing whitespace" \
@@ -185,10 +181,7 @@ jobs:
           echo '::group:: Flagging missing EOF newlines with reviewdog 🐶 ...'
           # Don't fail because of misspell
           set +o pipefail
-          for x in $(find . -path './vendor' -prune \
-                 -o -path './third_party' -prune \
-                 -o -path './.git' -prune \
-                 -o -type f); do
+          for x in $(find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*'); do
             # Based on https://stackoverflow.com/questions/34943632/linux-check-if-there-is-an-empty-line-at-the-end-of-a-file
             if [[ -f $x && ! ( -s "$x" && -z "$(tail -c 1 $x)" ) ]]; then
               # We add 1 to `wc -l` here because of this limitation (from the man page):
