@@ -93,6 +93,25 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Install Tools
+        run: |
+          TEMP_PATH="$(mktemp -d)"
+          cd $TEMP_PATH
+
+          echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
+          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${TEMP_PATH}" 2>&1
+          echo '::endgroup::'
+
+          echo '::group:: Installing misspell ... https://github.com/client9/misspell'
+          go get github.com/client9/misspell/cmd/misspell
+          echo '::endgroup::'
+
+          echo '::group:: Installing woke ... https://github.com/get-woke/woke'
+          curl -sfL https://raw.githubusercontent.com/get-woke/woke/main/install.sh | sh -s -- -b "${TEMP_PATH}" "${WOKE_VERSION}" 2>&1
+          echo '::endgroup::'
+
+          echo "::add-path::${TEMP_PATH}"
+
       - id: golangci_configuration
         uses: andstor/file-existence-action@v1
         with:
@@ -112,17 +131,6 @@ jobs:
         run: |
           set -e
           cd "${GITHUB_WORKSPACE}" || exit 1
-
-          TEMP_PATH="$(mktemp -d)"
-          PATH="${TEMP_PATH}:$PATH"
-
-          echo '::group:: Installing misspell ... https://github.com/client9/misspell'
-          go get github.com/client9/misspell/cmd/misspell
-          echo '::endgroup::'
-
-          echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
-          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${TEMP_PATH}" 2>&1
-          echo '::endgroup::'
 
           echo '::group:: Running github.com/client9/misspell with reviewdog 🐶 ...'
           # Don't fail because of misspell
@@ -149,13 +157,6 @@ jobs:
           set -e
           cd "${GITHUB_WORKSPACE}" || exit 1
 
-          TEMP_PATH="$(mktemp -d)"
-          PATH="${TEMP_PATH}:$PATH"
-
-          echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
-          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${TEMP_PATH}" 2>&1
-          echo '::endgroup::'
-
           echo '::group:: Flagging trailing whitespace with reviewdog 🐶 ...'
           # Don't fail because of grep
           set +o pipefail
@@ -180,13 +181,6 @@ jobs:
         run: |
           set -e
           cd "${GITHUB_WORKSPACE}" || exit 1
-
-          TEMP_PATH="$(mktemp -d)"
-          PATH="${TEMP_PATH}:$PATH"
-
-          echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
-          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${TEMP_PATH}" 2>&1
-          echo '::endgroup::'
 
           echo '::group:: Flagging missing EOF newlines with reviewdog 🐶 ...'
           # Don't fail because of misspell
@@ -222,17 +216,6 @@ jobs:
         run: |
           set -e
           cd "${GITHUB_WORKSPACE}" || exit 1
-
-          TEMP_PATH="$(mktemp -d)"
-          PATH="${TEMP_PATH}:$PATH"
-
-          echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
-          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${TEMP_PATH}" 2>&1
-          echo '::endgroup::'
-
-          echo '::group:: Installing woke ... https://github.com/get-woke/woke'
-          curl -sfL https://raw.githubusercontent.com/get-woke/woke/main/install.sh | sh -s -- -b "${TEMP_PATH}" "${WOKE_VERSION}" 2>&1
-          echo '::endgroup::'
 
           # Create a minimal .wokeignore if none already exist.
           if [ ! -f .wokeignore ]; then
