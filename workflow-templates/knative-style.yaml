@@ -38,20 +38,42 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Install Dependencies
+        run: |
+          cd $(mktemp -d)
+          GO111MODULE=on go get golang.org/x/tools/cmd/goimports
+
       # Run this last because it alters the workspace.
       # TODO: add prettier step
-      # TODO: add goimports step
-      - name: Go Format
+      - name: Go Imports
         shell: bash
         run: |
-          gofmt -s -w $(find -path './vendor' -prune -o -path './third_party' -prune -o -type f -name '*.go' -print)
-      - name: Verify
+          goimports -w $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print)
+          echo "::set-env name=FMT_TOOL::goimports"
+      - name: Verify goimport
         shell: bash
         run: |
           if [[ $(git diff-index --name-only HEAD --) ]]; then
               echo "Found diffs in:"
               git diff-index --name-only HEAD --
-              echo "${{ github.repository }} is out of style. Please run go fmt."
+              echo "${{ github.repository }} is out of style. Please run $FMT_TOOL."
+              exit 1
+          fi
+          echo "${{ github.repository }} is formatted correctly."
+
+      - name: Go Format
+        shell: bash
+        run: |
+          gofmt -s -w $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print)
+          echo "::set-env name=FMT_TOOL::gofmt"
+      - name: Verify gofmt
+        shell: bash
+        # TODO(mattmoor): combine with above via anchors when actions support it.
+        run: |
+          if [[ $(git diff-index --name-only HEAD --) ]]; then
+              echo "Found diffs in:"
+              git diff-index --name-only HEAD --
+              echo "${{ github.repository }} is out of style. Please run $FMT_TOOL."
               exit 1
           fi
           echo "${{ github.repository }} is formatted correctly."
