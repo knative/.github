@@ -2,10 +2,13 @@
 
 This repository is for sharing org-wide Github metadata and workflow templates.
 
-Some files (if not all) in this directory get automagically synced to other
-Knative, so when adding new files, make sure to include a note below to
-templates about this. The syncing is done by
-[knobots](https://github.com/mattmoor/knobots).
+The source of truth for this content is: https://github.com/knative-sandbox/.github,
+which is mirrored to "downstream" `.github` repositories (e.g. `knative/.github`)
+automatically on a [cron](/.github/workflows/sync.yaml).
+
+The workflow files under `workflow-templates/*.yaml` are automatically pulled into
+"downstream" code repositories (e.g. `knative/serving`'s `.github/workflows`) via
+a Pull Request opened each weekday, currently by the [knobots](https://github.com/mattmoor/knobots).
 
 ```yaml
 # This file is automagically synced here from github.com/knative-sandbox/.github
