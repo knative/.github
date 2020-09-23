@@ -16,7 +16,7 @@ name: repo-sync
 
 on:
   schedule:
-  - cron: '0 13 * * 3' # Runs at 13:00 UTC (6am Pacific) on Wed
+  - cron: '0 18 * * 3' # Runs at 18:00 UTC (11am Pacific) on Wed
 
 jobs:
   repo-sync:
@@ -26,7 +26,7 @@ jobs:
       uses: wei/git-sync@v2
       if: ${{ github.repository != 'knative-sandbox/.github' }}
       with:
-        source_repo: "knative-sandbox/.github"
+        source_repo: "https://github.com/knative-sandbox/.github.git"
         source_branch: "master"
         destination_repo: "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
         destination_branch: "master"
