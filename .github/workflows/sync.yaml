@@ -18,6 +18,8 @@ on:
   schedule:
   - cron: '0 18 * * 3' # Runs at 18:00 UTC (11am Pacific) on Wed
 
+  workflow_dispatch:    # Manual trigger.
+
 jobs:
   repo-sync:
     runs-on: ubuntu-latest
