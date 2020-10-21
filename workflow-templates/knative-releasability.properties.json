@@ -1,0 +1,5 @@
+{
+    "name": "Knative Releasability workflow",
+    "description": "Inspect the releasibility of a repo and report to a slack channel.",
+    "iconName": "blender"
+}
