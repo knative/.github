@@ -1,0 +1,5 @@
+{
+    "name": "Knative release notes generator workflow",
+    "description": "Runs https://github.com/kubernetes/release/tree/master/cmd/release-notes tool to generate release notes based on commit history between two SHAs.",
+    "iconName": "blender"
+}
