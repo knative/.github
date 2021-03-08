@@ -1,5 +1,2 @@
 # Default owners are Productivity WG leads, and TOC
-* @knative-sandbox/technical-oversight-committee
-* @knative-sandbox/knative-release-leads
-# Last match takes precedence for reviews
-* @knative-sandbox/productivity-wg-leads
+* @knative-sandbox/productivity-wg-leads @knative-sandbox/knative-release-leads @knative-sandbox/technical-oversight-committee
