@@ -100,7 +100,7 @@ jobs:
 
       - name: Install Tools
         env:
-          WOKE_VERSION: v0.5.0
+          WOKE_VERSION: v0.8.0
         run: |
           TEMP_PATH="$(mktemp -d)"
           cd $TEMP_PATH
