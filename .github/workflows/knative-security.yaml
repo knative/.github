@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file is automagically synced here from github.com/knative-sandbox/.github
-# repo by knobots: https://github.com/knative-sandbox/knobots and will be overwritten.
-
 name: 'Security'
 
 on:
   push:
-    branches: [ 'main', 'master', 'release-*' ]
+    branches: [ 'main' ]
 
   pull_request:
-    branches: [ 'main', 'master', 'release-*' ]
+    branches: [ 'main' ]
 
 jobs:
   analyze:
@@ -32,22 +29,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        # We must fetch at least the immediate parents so that if this is
-        # a pull request then we can checkout the head.
-        fetch-depth: 2
-
-    # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: go
-
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
 
     - name: Find Unicode Control Characters
       uses: pierdipi/unicode-control-characters-action@v0.1.0
