@@ -31,7 +31,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Find Unicode Control Characters
-      uses: pierdipi/unicode-control-characters-action@v0.1.0
+      uses: pierdipi/unicode-control-characters-action@v0.1.1
       with:
         args: -d .
 
