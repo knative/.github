@@ -30,5 +30,21 @@ jobs:
       with:
         source_repo: "https://github.com/knative-sandbox/.github.git"
         source_branch: "main"
-        destination_repo: "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+        destination_repo: "https://x-access-token:${{ secrets.SYNC_TOKEN || github.token }}@github.com/${{ github.repository }}.git"
         destination_branch: "main"
+    - name: setup env for slack
+      run: |
+          if [[ "${{ secrets.SLACK_WEBHOOK }}" != "" ]]; then
+            echo "SLACK_WEBHOOK=exists" >> $GITHUB_ENV
+          fi
+    - name: Post failures to Slack
+      # Note: using env.SLACK_WEBHOOK here because secrets are not allowed in the if block.
+      if: env.SLACK_WEBHOOK != '' && failed()
+      uses: rtCamp/action-slack-notify@v2.1.0
+      env:
+        SLACK_ICON: http://github.com/knative.png?size=48
+        SLACK_USERNAME: github-actions
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        MSG_MINIMAL: 'true'
+        SLACK_MESSAGE: |
+          Repo sync failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
