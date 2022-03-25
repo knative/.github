@@ -25,18 +25,16 @@ jobs:
 
   verify:
     name: Verify Deps and Codegen
-    strategy:
-      matrix:
-        go-version: [1.17.x]
-        platform: [ubuntu-latest]
-
-    runs-on: ${{ matrix.platform }}
+    # Please don't use matrixes for this action. It is marked as required in branchprotector.
+    # Everytime you modify the matrix, GitHub generates a new status context which needs to be 
+    # updated in prow.
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Go ${{ matrix.go-version }}
+    - name: Set up Go 1.17.x
       uses: actions/setup-go@v2
       with:
-        go-version: ${{ matrix.go-version }}
+        go-version: 1.17.x
       id: go
 
     - name: Install Dependencies
