@@ -22,42 +22,5 @@ on:
     branches: [ 'main', 'master', 'release-*' ]
 
 jobs:
-
   build:
-    name: Build
-    # Please don't use matrixes for this action. It is marked as required in branchprotector.
-    # Everytime you modify the matrix, GitHub generates a new status context which needs to be 
-    # updated in prow.
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Set up Go 1.17.x
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.17.x
-        id: go
-
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - id: go_mod
-        uses: andstor/file-existence-action@v1
-        with:
-          files: go.mod
-
-      - name: Build
-        if: ${{ steps.go_mod.outputs.files_exists == 'true' }}
-        run: |
-          tags="$(grep -I  -r '// +build' . | \
-                grep -v '^./vendor/' | \
-                grep -v '^./hack/' | \
-                grep -v '^./third_party' | \
-                cut -f3 -d' ' | \
-                tr ',' '\n' | \
-                sort | uniq | \
-                grep -v '^!' | \
-                tr '\n' ' ')"
-
-          echo "Building with tags: ${tags}"
-          go test -vet=off -tags "${tags}" -exec echo ./...
+    uses: knative/actions/.github/workflows/go-build.yaml@main
