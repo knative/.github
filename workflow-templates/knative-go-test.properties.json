@@ -1,5 +1,0 @@
-{
-    "name": "Knative test workflow",
-    "description": "Verifies that all Go unit testing passes.",
-    "iconName": "blender"
-}

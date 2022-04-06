@@ -1,5 +1,0 @@
-{
-    "name": "Knative DO NOT SUBMIT workflow",
-    "description": "Scans pull requests for DO NOT SUBMIT.",
-    "iconName": "blender"
-}

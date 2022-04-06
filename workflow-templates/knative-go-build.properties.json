@@ -1,5 +1,0 @@
-{
-    "name": "Knative build workflow",
-    "description": "Verifies that all Go packages build.",
-    "iconName": "blender"
-}

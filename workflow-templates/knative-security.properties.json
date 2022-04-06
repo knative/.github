@@ -1,5 +1,0 @@
-{
-    "name": "Knative security workflow",
-    "description": "Runs automated security checks against the codebase.",
-    "iconName": "blender"
-}
