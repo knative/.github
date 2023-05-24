@@ -26,9 +26,9 @@ jobs:
     steps:
     - name: repo-sync
       uses: wei/git-sync@v2
-      if: ${{ github.repository != 'knative-sandbox/.github' }}
+      if: ${{ github.repository != 'knative-extension/.github' }}
       with:
-        source_repo: "https://github.com/knative-sandbox/.github.git"
+        source_repo: "https://github.com/knative-extension/.github.git"
         source_branch: "main"
         destination_repo: "https://x-access-token:${{ secrets.SYNC_TOKEN || github.token }}@github.com/${{ github.repository }}.git"
         destination_branch: "main"

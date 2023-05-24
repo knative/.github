@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: check
-      if: ${{ github.repository != 'knative-sandbox/.github' }}
+      if: ${{ github.repository != 'knative-extension/.github' }}
       run: |
-        echo "::error::${{ github.repository }} is not the source of truth.  Please send a Pull Request to 'knative-sandbox/.github' instead."
+        echo "::error::${{ github.repository }} is not the source of truth.  Please send a Pull Request to 'knative-extension/.github' instead."
         exit 1
